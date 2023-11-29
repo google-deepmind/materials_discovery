@@ -15,8 +15,8 @@ is a fundamental problem in materials science. Graph Networks for Materials
 Science (GNoME) is a project centered around scaling machine learning methods
 to tackle this core task. With results recently published, this repository
 serves to share the discovery of 381,000 novel stable materials with the wider
-materials science community and hopefully enable researchers via the updated
-convex hull.
+materials science community and hopefully enable exciting new research via the
+updated convex hull.
 
 This is a research project, not an official Google product. Expect bugs as the
 repository expands and sharp edges. Please help by exploring the structures
@@ -33,23 +33,24 @@ and let us know what you think!
 
 ### Dataset
 
-The dataset described in the original paper is provided in multiple formats.
+The dataset described in the original paper is provided across multiple file
+formats. For more details, including how to download the dataset, please see
+our dataset descriptor file in DATASET.md.
 
 **Summarized** A summary of the dataset is provided in CSV format. This file
 contains compositions and raw energies from Density Functional Theory (DFT)
-calculations, as well as other popular measurements
-(e.g. formation energy and decomposition energy). For more details, please read
-our dataset descriptor file at DATASET.md.
+calculations, as well as other popular measurements (e.g. formation energy and
+decomposition energy).
 
 **Structure** Loading of structures is slightly more cumbersome due to file
 sizes involved. Due to the organization of the convex hull, only one structure
 is needed per composition, so results from the summary can be used to pull
 from the compressed data directory available in the linked Cloud Bucket.
 
-**r^2SCAN** Baseline calculations were performed via PBE functional for the
+**r²SCAN** Baseline calculations were performed via PBE functional for the
 calculations. The paper also reports metrics for binaries and tenaries with
-this additional functional. A summary of calculated energies and associated
-metrics is also included for these calculations.
+the r²SCAN functional. A summary of calculated energies and associated
+metrics is included for these calculations.
 
 ### Models
 
@@ -103,12 +104,14 @@ Data in the Graph Networks for Materials Exploration Database is for theoretical
 
 If you are using this resource please cite our
 [paper](https://www.nature.com/articles/s41586-023-06735-9)
+
 ```latex
   @article{merchant2023scaling,
     title={Scaling deep learning for materials discovery},
     author={Amil Merchant and Simon Batzner and Samuel S. Schoenholz and Muratahan Aykol and Gowoon Cheon and Ekin Dogus Cubuk},
+    journal={Nature},
     year={2023},
+    doi={10.1038/s41586-023-06735-9},
+    href={https://www.nature.com/articles/s41586-023-06735-9},
 }
 ```
-
-

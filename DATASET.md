@@ -22,19 +22,45 @@ gdm_materials_discovery
 
 There are two main options for downloading the dataset to a local directory.
 
-* **Command line:** the command line interface can be used to directly download structures from the public bucket via a command of the form ```gsutil -m cp -r gs://gdm_materials_discovery/ data/``` 
-* **Python script:** Helper scripts have also been provided using that can be run using ```python download_data_wget.py``` or ```python download_data_cloud.py``` with the optional ```data_dir``` flag in order to determine the output location. The latter may be preferable if the user already has Google Cloud CLI already authorized.
+* **Command line:** the command line interface can be used to directly download structures from the public bucket via a command of the form ```gsutil -m cp -r gs://gdm_materials_discovery/ data/```. The ```gsutil``` command can be installed following the [Google Cloud CLI install instructions](https://cloud.google.com/sdk/docs/install).
+* **Python script:** Helper scripts have also been provided using that can be run using either `scripts/download_data_wget.py` or `scripts/download_data_cloud.py`. The latter may be preferable if the user already has Google Cloud CLI already authorized.
+
+  First, install the required dependencies. It is best to do this inside a virtual environment:
+
+  ```bash
+  python -m venv ~/venv/gnome
+  source ~/venv/gnome/bin/activate
+  pip install absl-py google-cloud-storage
+  ```
+
+  The `google-cloud-storage` package is only required for the
+  `download_data_cloud.py` script. Then run either:
+
+  ```bash
+  python scripts/download_data_wget.py
+  ```
+
+  or, after following the [Google Cloud CLI install instructions](https://cloud.google.com/sdk/docs/install),
+
+  ```bash
+  gcloud auth application-default login
+  python scripts/download_data_gcloud.py
+  ```
+
+  Both scripts take an optional flag, `--data_dir`, to control the directory
+  the data is downloaded to. By default, the `data` directory in the current
+  working directory is used, and created if requried.
 
 ## Convex Hull
 
 First, in ```stable_materials_hull.csv```, we provide a CSV containing the compositions of all novel materials as well as 
 corresponding energies. This file is the simplest and most useful for calculating the convex hull energies over all stable materials. New materials can be benchmarked against this file for decomposition energy estimates.
 
-Note, construction of the complete convex hull requires energies from Materials Project (MP), the Open Quantum Materials Database (OQMD), and WBM. In an update to be released shortly, we will the recalculated DFT measurements from entries originating from MP, OQMD, and WBM that allow for the generation of the complete convex hull. Once this is complete, the union with ```stable_materials_hull.csv``` will provide the updated convex hull.
+Note, construction of the complete convex hull requires energies from Materials Project (MP), the Open Quantum Materials Database (OQMD), and WBM. In an update to be released shortly, we will also include the recalculated DFT measurements from entries originating from MP, OQMD, and WBM that allow for the generation of the complete convex hull. Once this is complete, the union with ```stable_materials_hull.csv``` will provide the updated convex hull.
 
 ## Properties
 
-Beyond energy, a number of additional properties may be of interest for the novel crystal structures. ```stable_materials_summaries.csv``` provides a number of additional descriptors that may be helpful when processing or looking for crystals with specific properties.
+Beyond energy, a number of additional properties may be of interest for the novel crystal structures. ```stable_materials_summary.csv``` provides a number of additional descriptors that may be helpful when processing or looking for crystals with specific properties.
 
 A list of the properties provided and textual descriptions is provided below:
 
@@ -63,15 +89,15 @@ distance to convex hull of all entries from Materials Project (including recalcu
 * **Decomposition Energy Per Atom MP OQMD:**
 distance to convex hull of all entries from Materials Project + Open Quantum Materials Database (including recalculations)
 
-Additional measurements (e.g. air stability) could be made available across the dataset for any high-throughput searches. Please get in touch.
+Additional measurements (e.g. air stability) could be made available across the dataset for any high-throughput searches. Please get in touch if this is of interest to you.
 
 ## Structures
 
 Each of the associated rows of the CSV provided above is associated with a crystal structure. We provide compressed directories of associated CIFs, a standard file format within the materials science community. Note, three versions of the compressed directories exist, where file names allow for lookup by unique identifier, reduced formula, or by composition.
 
-## r^2SCAN
+## r²SCAN
 
-Validation of the associated structures was completed using r^2SCAN. ```stable_materials_r2scan.csv``` provides all r^2SCAN calculations performed on stable materials. Note, stability metrics change with the choice functional (as discussed in the associated paper), so not all released materials remain stable according to this metric.
+Validation of the associated structures was completed using r²SCAN. ```stable_materials_r2scan.csv``` provides all r²SCAN calculations performed on stable materials. Note, stability metrics change with the choice functional (as discussed in the associated paper), so not all released materials remain stable according to this metric.
 
 ## Caveats
 
