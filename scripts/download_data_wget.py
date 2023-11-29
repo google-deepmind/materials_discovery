@@ -19,21 +19,23 @@ import os
 from absl import app
 from absl import flags
 
-flags.DEFINE_string("data_dir", "data", "Location to copy downloaded data.")
-
-FLAGS = flags.FLAGS
+_DATA_DIR = flags.DEFINE_string(
+    name="data_dir",
+    default="data",
+    help="Location to copy downloaded data.",
+)
 
 PUBLIC_LINK = "https://storage.googleapis.com/"
 BUCKET_NAME = "gdm_materials_discovery"
 FOLDER_NAME = "gnome_data"
-FILES = [
+FILES = (
     "stable_materials_hull.csv",
     "stable_materials_r2scan.csv",
     "stable_materials_summary.csv",
     "by_composition.zip",
     "by_id.zip",
     "by_reduced_formula.zip",
-]
+)
 
 
 def download_from_link(link, output_dir):
@@ -46,21 +48,22 @@ def main(argv: Sequence[str]) -> None:
     raise app.UsageError("Too many command-line arguments.")
 
   # Create output folder
-  output_folder = os.path.join(FLAGS.data_dir, FOLDER_NAME)
+  output_folder = os.path.join(_DATA_DIR.value, FOLDER_NAME)
   os.makedirs(output_folder, exist_ok=True)
 
   parent_directory = os.path.join(PUBLIC_LINK, BUCKET_NAME, FOLDER_NAME)
 
   # Download LICENSE file
   download_from_link(
-      os.path.join(PUBLIC_LINK, BUCKET_NAME, "LICENSE"), FLAGS.data_dir
+      os.path.join(PUBLIC_LINK, BUCKET_NAME, "LICENSE"), _DATA_DIR.value
   )
 
+  # Download data files.
   for filename in FILES:
     public_link = os.path.join(parent_directory, filename)
-    download_from_link(public_link, os.path.join(FLAGS.data_dir, FOLDER_NAME))
+    download_from_link(public_link, os.path.join(_DATA_DIR.value, FOLDER_NAME))
 
-  print(f"Done downloading data to directory: {FLAGS.data_dir}")
+  print(f"Done downloading data to directory: {_DATA_DIR.value}")
 
 
 if __name__ == "__main__":

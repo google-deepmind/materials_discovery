@@ -20,20 +20,22 @@ from absl import app
 from absl import flags
 from google.cloud import storage
 
-flags.DEFINE_string("data_dir", "data", "Location to copy downloaded data.")
-
-FLAGS = flags.FLAGS
+_DATA_DIR = flags.DEFINE_string(
+    name="data_dir",
+    default="data",
+    help="Location to copy downloaded data.",
+)
 
 BUCKET_NAME = "gdm_materials_discovery"
 FOLDER_NAME = "gnome_data"
-FILES = [
+FILES = (
     "stable_materials_hull.csv",
     "stable_materials_r2scan.csv",
     "stable_materials_summary.csv",
     "by_composition.zip",
     "by_id.zip",
     "by_reduced_formula.zip",
-]
+)
 
 
 def copy_blob(bucket, blob_name, copy_dir):
@@ -51,17 +53,18 @@ def main(argv: Sequence[str]) -> None:
   bucket = storage_client.bucket(BUCKET_NAME)
 
   # Create output folder
-  output_folder = os.path.join(FLAGS.data_dir, FOLDER_NAME)
+  output_folder = os.path.join(_DATA_DIR.value, FOLDER_NAME)
   os.makedirs(output_folder, exist_ok=True)
 
   # Download LICENSE file
-  copy_blob(bucket, "LICENSE", FLAGS.data_dir)
+  copy_blob(bucket, "LICENSE", _DATA_DIR.value)
 
+  # Download data files.
   for filename in FILES:
     blob_name = os.path.join(FOLDER_NAME, filename)
-    copy_blob(bucket, blob_name, FLAGS.data_dir)
+    copy_blob(bucket, blob_name, _DATA_DIR.value)
 
-  print(f"Done downloading data to directory: {FLAGS.data_dir}")
+  print(f"Done downloading data to directory: {_DATA_DIR.value}")
 
 
 if __name__ == "__main__":
