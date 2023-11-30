@@ -38,9 +38,11 @@ FILES = (
 )
 
 
-def copy_blob(bucket, blob_name, copy_dir):
+def copy_blob(bucket: storage.Bucket, blob_name: str, copy_dir: str):
   """Copy a file from Google Cloud storage."""
   blob = bucket.get_blob(blob_name)
+  if blob is None:
+    raise ValueError(f"Unable to find blob {blob_name} in bucket {bucket.name}")
   output_filename = os.path.join(copy_dir, blob_name)
   blob.download_to_filename(output_filename)
 

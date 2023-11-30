@@ -38,7 +38,7 @@ FILES = (
 )
 
 
-def download_from_link(link, output_dir):
+def download_from_link(link: str, output_dir: str):
   """Download a file from a public link using wget."""
   os.system(f"wget {link} -P {output_dir}")
 
