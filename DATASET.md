@@ -103,3 +103,10 @@ Validation of the associated structures was completed using r²SCAN. ```stable_m
 
 Due to numerical precision (and errors arising from the computational simulations), we use a threshold of 5e-5 eV as the threshold for determining whether a material is on the convex hull. For all measurements, the provided materials update the convex hull of a snapshotted version of Materials Project and similar databases. Therefore, as more crystals are discovered by the scientific community, the above set may not remain stable.
 
+## Versioning
+
+Below, we keeps notes about any upgrades made to the dataset as well as approximate timing. 
+
+* (11/29) Initial dataset release
+* (12/1) Re-introduce paper filters to remove un-physical energies; add 2 missing columns ('Dimensionality Cheon' and 'Is Train')
+
