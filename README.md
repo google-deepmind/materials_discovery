@@ -18,6 +18,11 @@ serves to share the discovery of 381,000 novel stable materials with the wider
 materials science community and hopefully enable exciting new research via the
 updated convex hull.
 
+As of August 2024, we have expanded the dataset to release all materials
+measured to be within 1 meV/atom from the convex hull. We hope that this
+provides greater context to the convex hulls in chemical families of interest,
+for a total of >520,000 materials.
+
 This is a research project, not an official Google product. Expect bugs as the
 repository expands and sharp edges. Please help by exploring the structures
 and let us know what you think!
@@ -45,7 +50,10 @@ decomposition energy).
 **Structure** Loading of structures is slightly more cumbersome due to file
 sizes involved. Due to the organization of the convex hull, only one structure
 is needed per composition, so results from the summary can be used to pull
-from the compressed data directory available in the linked Cloud Bucket.
+from the compressed data directory available in the linked Cloud Bucket. An
+alternative approach to extract individual files from the compressed ZIP
+(so as to only extract necessary files) is exemplified in the visualization
+colab.
 
 **r²SCAN** Baseline calculations were performed via PBE functional for the
 calculations. The paper also reports metrics for binaries and tenaries with
@@ -69,8 +77,8 @@ architecture.
 
 ### Colabs
 
-Colab examples of how to interact with the dataset and models will be released
-to provide an easier interface with both.
+Colab examples of how to interact with the dataset provide an interface for
+exploring various chemical systems or computing decomposition energies.
 
 ### License
 
@@ -85,9 +93,6 @@ from Density Functional Theory.
 
 ### Upcoming
 
-- [ ] Repeated calculations of structures from the Materials Project and other agglomerated datasets (Open Quantum Materials Database, WBM) under consistent settings (defining the complete convex hull)
-- [ ] Example colabs of loading materials from the CSVs and calculating convex hull energies
-- [ ] Code to visualize structures in a colab notebooks
 - [ ] Reference structures and search paths
 - [ ] Model training colabs and configs
 - [ ] Additional material properties (e.g. electronic band structure)

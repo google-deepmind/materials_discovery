@@ -12,18 +12,20 @@ The GNoME dataset provides ~381,000 novel structures that update the convex hull
 ```
 gdm_materials_discovery
 └───gnome_data
-│   │   stable_materials_hull.csv
-│   │   stable_materials_r2scan.csv
 │   │   stable_materials_summary.csv
+│   │   stable_materials_r2scan.csv
 │   │   by_composition.zip
 │   │   by_id.zip
 │   │   by_reduced_formula.zip
+└───external_data
+|   |   mp_snapshot_summary.csv
+|   |   external_materials_summary.csv
 ```
 
 There are two main options for downloading the dataset to a local directory.
 
 * **Command line:** the command line interface can be used to directly download structures from the public bucket via a command of the form ```gsutil -m cp -r gs://gdm_materials_discovery/ data/```. The ```gsutil``` command can be installed following the [Google Cloud CLI install instructions](https://cloud.google.com/sdk/docs/install).
-* **Python script:** Helper scripts have also been provided using that can be run using either `scripts/download_data_wget.py` or `scripts/download_data_cloud.py`. The latter may be preferable if the user already has Google Cloud CLI already authorized.
+* **Python script:** Helper scripts have also been provided, which can be run using either `scripts/download_data_wget.py` or `scripts/download_data_cloud.py`. The latter may be preferable if the user already has the Google Cloud CLI authorized.
 
   First, install the required dependencies. It is best to do this inside a virtual environment:
 
@@ -49,14 +51,17 @@ There are two main options for downloading the dataset to a local directory.
 
   Both scripts take an optional flag, `--data_dir`, to control the directory
   the data is downloaded to. By default, the `data` directory in the current
-  working directory is used, and created if requried.
+  working directory is used, and created if required.
 
 ## Convex Hull
 
-First, in ```stable_materials_hull.csv```, we provide a CSV containing the compositions of all novel materials as well as 
-corresponding energies. This file is the simplest and most useful for calculating the convex hull energies over all stable materials. New materials can be benchmarked against this file for decomposition energy estimates.
+First, in ```stable_materials_summary.csv```, we provide a CSV containing the compositions of all novel materials as well as 
+corresponding energies (along with a number of other properties). This file is the simplest and most useful for calculating the convex hull energies over all stable materials. New materials can be benchmarked against this file for decomposition energy estimates. We have updated this csv to ensure minimal overlap with newer versions of external datasets such as OQMD and MP, based on snapshots in June 2024.
 
-Note, construction of the complete convex hull requires energies from Materials Project (MP), the Open Quantum Materials Database (OQMD), and WBM. In an update to be released shortly, we will also include the recalculated DFT measurements from entries originating from MP, OQMD, and WBM that allow for the generation of the complete convex hull. Once this is complete, the union with ```stable_materials_hull.csv``` will provide the updated convex hull.
+Note, construction of the complete convex hull requires energies from Materials Project (MP), the Open Quantum Materials Database (OQMD), and WBM. We have
+included ```external_materials_summary.csv``` to provide composition and associated convex hull entries with elemental compositions that match these external datasets, though in some cases the improved energies correspond to lower energy structures.
+
+The combination of these two datasets provides the updated convex hull and can be used for evaluating the stability of other computational experiments. In additional, for the example colabs, we also provide a snapshot of the stable crystals from the Materials Project, enabling visualization of the exploration spaces of GNoME.
 
 ## Properties
 
@@ -75,21 +80,20 @@ A list of the properties provided and textual descriptions is provided below:
 * **Space Group:** assigned space group
 * **Space Group Number:** assigned space group number
 * **Crystal System:** assigned crystal system
+* **UnCorrected Energy:** uncorrected energy
 * **Corrected Energy:** energy adjusted by MP2020 corrections
 * **Formation Energy Per Atom:** normalized energy corrected by reference elements
 * **Decomposition Energy Per Atom:** decomposition energy relative to the downloaded Materials Project convex hull
 * **Dimensionality Cheon:** dimensionality predicted by Cheon et al. 2017
-* **Bandgap:** calculated bandgap
+* **Bandgap:** calculated bandgap (if available)
 * **Is Train:** in training set for associated machine learning models
 * **Decomposition Energy Per Atom All:** distance to convex hull of all entries
 * **Decomposition Energy Per Atom Relative:**
 distance to convex hull of all entries except for the current
 * **Decomposition Energy Per Atom MP:**
-distance to convex hull of all entries from Materials Project (including recalculations)
+distance to convex hull of all entries from Materials Project
 * **Decomposition Energy Per Atom MP OQMD:**
 distance to convex hull of all entries from Materials Project + Open Quantum Materials Database (including recalculations)
-
-Additional measurements (e.g. air stability) could be made available across the dataset for any high-throughput searches. Please get in touch if this is of interest to you.
 
 ## Structures
 
@@ -107,6 +111,12 @@ Due to numerical precision (and errors arising from the computational simulation
 
 Below, we keeps notes about any upgrades made to the dataset as well as approximate timing. 
 
-* (11/29) Initial dataset release
-* (12/1) Re-introduce paper filters to remove un-physical energies; add 2 missing columns ('Dimensionality Cheon' and 'Is Train')
+* (11/29/23) Initial dataset release
+* (12/1/23) Re-introduce paper filters to remove un-physical energies; add 2 missing columns ('Dimensionality Cheon' and 'Is Train')
+* (8/21/24) Adjust threshold to 1meV/atom off the hull significantly increasing the number of released crystals, update to use "require_bound" version of MP corrections, re-relax structure where VASP did not update lattice coordinates, provide convex hull entries from recomputations of MP / OQMD / ..., provided colabs for accessing, fixed file naming in by_id.zip
+
+## Disclaimer
+
+Auxiliary data that are not as part of the core GNoME effort (such as e.g. band gaps) are provided as-is, at PBE-level, are work in progress, and may be updated over time. Continued efforts to characterize the electronic properties of stable materials may update / correct these values. More accurate calculations and processing are a work-in-progress.
+
 

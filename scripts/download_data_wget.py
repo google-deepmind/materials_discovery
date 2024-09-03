@@ -29,7 +29,6 @@ PUBLIC_LINK = "https://storage.googleapis.com/"
 BUCKET_NAME = "gdm_materials_discovery"
 FOLDER_NAME = "gnome_data"
 FILES = (
-    "stable_materials_hull.csv",
     "stable_materials_r2scan.csv",
     "stable_materials_summary.csv",
     "by_composition.zip",

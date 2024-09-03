@@ -57,7 +57,7 @@ pyasn1==0.5.1
 pyasn1-modules==0.3.0
 pybtex==0.24.0
 Pygments==2.17.2
-pymatgen==2023.11.12
+pymatgen==2024.2.20
 pyparsing==3.1.1
 python-dateutil==2.8.2
 pytz==2023.3.post1
