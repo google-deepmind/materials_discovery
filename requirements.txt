@@ -80,5 +80,5 @@ tqdm==4.66.1
 typing_extensions==4.8.0
 tzdata==2023.3
 uncertainties==3.1.7
-urllib3==2.1.0
+urllib3==2.2.2
 zipp==3.17.0
