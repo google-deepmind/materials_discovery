@@ -17,6 +17,8 @@ gdm_materials_discovery
 │   │   by_composition.zip
 │   │   by_id.zip
 │   │   by_reduced_formula.zip
+│   └───auxiliary_gnome_data
+|       |   a2c_supporting_data.json
 └───external_data
 |   |   mp_snapshot_summary.csv
 |   |   external_materials_summary.csv
@@ -117,6 +119,6 @@ Below, we keeps notes about any upgrades made to the dataset as well as approxim
 
 ## Disclaimer
 
-Auxiliary data that are not as part of the core GNoME effort (such as e.g. band gaps) are provided as-is, at PBE-level, are work in progress, and may be updated over time. Continued efforts to characterize the electronic properties of stable materials may update / correct these values. More accurate calculations and processing are a work-in-progress.
+Additional data that are not as part of the core GNoME effort (such as e.g. band gaps) are provided as-is, at PBE-level, are work in progress, and may be updated over time. Continued efforts to characterize the electronic properties of stable materials may update / correct these values. More accurate calculations and processing are a work-in-progress. Other auxiliary data related to GNoME efforts (e.g. structure prediction with [a2c](https://arxiv.org/abs/2310.01117)) is available under auxiliary_gnome_data.
 
 
