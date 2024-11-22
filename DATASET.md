@@ -61,7 +61,11 @@ First, in ```stable_materials_summary.csv```, we provide a CSV containing the co
 corresponding energies (along with a number of other properties). This file is the simplest and most useful for calculating the convex hull energies over all stable materials. New materials can be benchmarked against this file for decomposition energy estimates. We have updated this csv to ensure minimal overlap with newer versions of external datasets such as OQMD and MP, based on snapshots in June 2024.
 
 Note, construction of the complete convex hull requires energies from Materials Project (MP), the Open Quantum Materials Database (OQMD), and WBM. We have
-included ```external_materials_summary.csv``` to provide composition and associated convex hull entries with elemental compositions that match these external datasets, though in some cases the improved energies correspond to lower energy structures.
+included ```external_materials_summary.csv``` to provide composition and associated convex hull entries with elemental compositions that match these external datasets, though in some cases the improved energies correspond to lower energy structures. To ensure compatibility between DFT calculations, we correct the energies of all entries in the Materials Project that contain any of Ga, Ge, Li, Mg, Na, elements for which the pseudopotentials we use and the ones used by MP differ. The correction per atom is provided below:
+
+```python:
+  pp_corr = {"Ga": -0.0028805, "Ge": 0.10417085, "Li": -0.00301278, "Mg": 0.0924014, "Na": -0.00447437}
+end
 
 The combination of these two datasets provides the updated convex hull and can be used for evaluating the stability of other computational experiments. In additional, for the example colabs, we also provide a snapshot of the stable crystals from the Materials Project, enabling visualization of the exploration spaces of GNoME.
 
@@ -97,6 +101,7 @@ distance to convex hull of all entries from Materials Project
 * **Decomposition Energy Per Atom MP OQMD:**
 distance to convex hull of all entries from Materials Project + Open Quantum Materials Database (including recalculations)
 
+Formation energies per atom are all calculated with respect to a fixed set of elemental references from the Materials Project (and not lowered if we found a lower) energy elemental structure. For clarity, we have provided a list of the elemental references used in JSON form in ```elemental_references.json```
 ## Structures
 
 Each of the associated rows of the CSV provided above is associated with a crystal structure. We provide compressed directories of associated CIFs, a standard file format within the materials science community. Note, three versions of the compressed directories exist, where file names allow for lookup by unique identifier, reduced formula, or by composition.
@@ -116,6 +121,7 @@ Below, we keeps notes about any upgrades made to the dataset as well as approxim
 * (11/29/23) Initial dataset release
 * (12/1/23) Re-introduce paper filters to remove un-physical energies; add 2 missing columns ('Dimensionality Cheon' and 'Is Train')
 * (8/21/24) Adjust threshold to 1meV/atom off the hull significantly increasing the number of released crystals, update to use "require_bound" version of MP corrections, re-relax structure where VASP did not update lattice coordinates, provide convex hull entries from recomputations of MP / OQMD / ..., provided colabs for accessing, fixed file naming in by_id.zip
+* (11/21/24) Ensure consistency in formation energies, provide used elemental references + pseudopotential corrections used in the GNoME paper
 
 ## Disclaimer
 
