@@ -23,7 +23,7 @@ google-cloud-storage==2.13.0
 google-crc32c==1.5.0
 google-resumable-media==2.6.0
 googleapis-common-protos==1.61.0
-idna==3.6
+idna==3.7
 importlib-resources==6.1.1
 jax==0.4.20
 jax-md==0.2.8
