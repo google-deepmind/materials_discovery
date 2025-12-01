@@ -13,7 +13,7 @@ e3nn-jax==0.20.3
 einops==0.7.0
 etils==1.5.2
 flax==0.7.5
-fonttools==4.45.1
+fonttools==4.61.0
 fsspec==2023.10.0
 future==0.18.3
 google-api-core==2.14.0
